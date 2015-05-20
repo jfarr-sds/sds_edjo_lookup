@@ -1,7 +1,16 @@
 {
+  "postgresql": {
+    "password": {
+      "postgres": "password",
+      "flask_user": "password"
+    }
+  },
   "run_list": 
   [ 
     "recipe[apt]",
+    "recipe[python]",
+    "recipe[postgresql::ruby]",
+    "recipe[postgresql::server]",
     "recipe[edjo_lookup]"
   ]
 }
