@@ -12,7 +12,7 @@ user 'flask' do
   supports :manage_home => true
   comment 'Flask User'
   uid 1234
-  gid 'users'
+  gid 'www-data'
   home '/home/flask'
   shell '/bin/bash'
   password 'pass'
@@ -25,6 +25,11 @@ end
 
 # Install flask framework
 python_pip "flask" do
+  action :install
+end
+
+# Install flask framework
+python_pip "uwsgi" do
   action :install
 end
 
