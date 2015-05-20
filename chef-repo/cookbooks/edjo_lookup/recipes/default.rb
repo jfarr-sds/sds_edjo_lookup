@@ -18,6 +18,11 @@ user 'flask' do
   password 'pass'
 end
 
+# Install psql driver for python
+python_pip "psycopg2" do
+  action :install
+end
+
 # Install flask framework
 python_pip "flask" do
   action :install
