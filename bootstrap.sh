@@ -26,4 +26,4 @@ fi
 # Use knife to create a new cookbook
 knife cookbook create edjo_lookup
 
-# sudo chef-solo -c /home/vagrant/chef-repo/solo.rb -j /home/vagrant/chef-repo/web.json
+sudo chef-solo -c /home/vagrant/chef-repo/solo.rb -j /home/vagrant/chef-repo/flask_api.json

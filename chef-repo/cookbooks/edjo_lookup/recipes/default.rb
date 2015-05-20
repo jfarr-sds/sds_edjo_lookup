@@ -18,32 +18,56 @@ user 'flask' do
   password 'pass'
 end
 
-# Install psql driver for python
-python_pip "psycopg2" do
-  action :install
-end
-
-# Install flask framework
-python_pip "flask" do
-  action :install
-end
-
-# Install flask framework
-python_pip "uwsgi" do
-  action :install
-end
-
 # create a Python 3.4 virtualenv
 python_virtualenv "/home/flask/venv" do
-  interpreter "python3.4"
+  interpreter "python2.7"
   owner "flask"
   group "users"
   action :create
 end
 
-python_pip "flask" do
+# Install psql driver for python
+python_pip "psycopg2" do
+  action :install
   virtualenv "/home/flask/venv"
 end
+
+# Install flask framework
+python_pip "flask" do
+  action :install
+  virtualenv "/home/flask/venv"
+end
+
+# Install uwsgi
+python_pip "uwsgi" do
+  action :install
+  virtualenv "/home/flask/venv"
+end
+
+link "/home/flask/lookup_api.py"do
+  to "/home/vagrant/chef-repo/sds_edjo_lookup_app/lookup_api.py" 
+end
+
+link "/home/flask/wsgi.py"do
+  to "/home/vagrant/chef-repo/sds_edjo_lookup_app/wsgi.py" 
+end
+
+template '/etc/init/lookup_api.conf' do
+  source 'lookup_api.conf.erb'
+  cookbook 'edjo_lookup'
+  mode '0644'
+  owner 'root'
+  group 'root'
+end
+
+template '/home/flask/lookup_api.ini' do
+  source 'lookup_api.ini.erb'
+  cookbook 'edjo_lookup'
+  mode '0644'
+  owner 'root'
+  group 'root'
+end
+
 
 # create a postgresql database
 postgresql_database 'edjo_lookup' do
